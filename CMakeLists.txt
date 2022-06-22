@@ -1,5 +1,5 @@
 # Copyright (C) 2022 GPL 3 and higher by Ingo Höft,  <Ingo@Hoeft-online.de>
-# Redistribution only with this Copyright remark. Last modified: 2022-06-21
+# Redistribution only with this Copyright remark. Last modified: 2022-06-22
 
 # Configure and build with:
 # cmake -S . -B build
@@ -56,5 +56,6 @@ message(CHECK_PASS "done")
 
 add_subdirectory(./mp-sockets)
 add_subdirectory(./accept)
+add_subdirectory(./functionptr)
 
 message(STATUS "Build type is ${CMAKE_BUILD_TYPE}")
