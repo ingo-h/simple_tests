@@ -1,5 +1,5 @@
 # Copyright (C) 2022 GPL 3 and higher by Ingo Höft,  <Ingo@Hoeft-online.de>
-# Redistribution only with this Copyright remark. Last modified: 2022-06-22
+# Redistribution only with this Copyright remark. Last modified: 2022-06-23
 
 # Configure and build with:
 # cmake -S . -B build
@@ -54,8 +54,9 @@ message(CHECK_PASS "done")
 # This caches <subprojectname>_SOURCE_DIR and <subprojectname_BINARY_DIR
 # e.g. INSPECT_ACCEPT_SOURCE_DIR and INSPECT_ACCEPT_BINARY_DIR
 
-add_subdirectory(./mp-sockets)
-add_subdirectory(./accept)
-add_subdirectory(./functionptr)
+#add_subdirectory(./mp-sockets)
+#add_subdirectory(./accept)
+#add_subdirectory(./functionptr)
+add_subdirectory(./string-literal)
 
 message(STATUS "Build type is ${CMAKE_BUILD_TYPE}")
