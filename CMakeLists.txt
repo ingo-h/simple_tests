@@ -1,5 +1,5 @@
 # Copyright (C) 2022 GPL 3 and higher by Ingo Höft,  <Ingo@Hoeft-online.de>
-# Redistribution only with this Copyright remark. Last modified: 2022-06-23
+# Redistribution only with this Copyright remark. Last modified: 2022-08-05
 
 # Configure and build with:
 # cmake -S . -B build
@@ -10,7 +10,7 @@ include(./project-header.cmake)
 
 # set the project name and version
 project(INSPECT_MOCKING VERSION 0001
-        DESCRIPTION "Inspect and test how mocking works."
+        DESCRIPTION "Some simple tests for understanding"
         HOMEPAGE_URL "https://github.com/ingo-h")
 
 enable_testing()
@@ -57,6 +57,7 @@ message(CHECK_PASS "done")
 #add_subdirectory(./mp-sockets)
 #add_subdirectory(./accept)
 #add_subdirectory(./functionptr)
-add_subdirectory(./string-literal)
+#add_subdirectory(./string-literal)
+add_subdirectory(./pipe)
 
 message(STATUS "Build type is ${CMAKE_BUILD_TYPE}")

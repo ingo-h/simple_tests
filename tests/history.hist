@@ -1,0 +1,6 @@
+g++ -ggdb -std=c++11 -pedantic-errors -Wall -lpthread test.cpp -o test -l upnp
+
+# to link and find a shared library
+# (alternative have a look at /etc/ld.so.conf.d/ and using ldconfig)
+~$ g++ -std=c++20 -pedantic-errors -Wall -I../upnplib/gtests/googletest/build/_deps/googletest-src/googletest/include test_assert_death.cpp -L/home/ingo/devel/upnplib-dev/upnplib/gtests/googletest/build/lib -lgtest
+~$ LD_LIBRARY_PATH=/home/ingo/devel/upnplib-dev/upnplib/gtests/googletest/build/lib ./a.out
