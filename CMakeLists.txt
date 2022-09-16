@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.18)
 include(./project-header.cmake)
 
 # set the project name and version
-project(INSPECT_MOCKING VERSION 0001
+project(SIMPLE_TESTS VERSION 0002
         DESCRIPTION "Some simple tests for understanding"
         HOMEPAGE_URL "https://github.com/ingo-h")
 

@@ -16,4 +16,17 @@ project(STRING_LITERALS VERSION 0001
 add_executable(test_pipe
     ./test_pipe.cpp
 )
+target_include_directories(test_pipe
+    PRIVATE
+        ${SIMPLE_TESTS_SOURCE_DIR}/../upnplib/gtests/include
+        ${SIMPLE_TESTS_SOURCE_DIR}/../upnplib/include
+)
+target_compile_definitions(test_pipe
+    PRIVATE
+        DEBUG
+)
+target_link_libraries(test_pipe
+    PRIVATE
+        ${SIMPLE_TESTS_SOURCE_DIR}/../upnplib/build/lib/libupnplib_gtest_tools_shared.so
+)
 add_test(NAME ctest_pipe COMMAND test_pipe)
