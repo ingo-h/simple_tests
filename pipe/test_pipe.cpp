@@ -1,9 +1,11 @@
 // Copyright (C) 2022 GPL 3 and higher by Ingo Höft,  <Ingo@Hoeft-online.de>
-// Redistribution only with this Copyright remark. Last modified: 2022-08-05
-//------------------------------------------------------------------------------
+// Redistribution only with this Copyright remark. Last modified: 2022-09-16
+//--------------------------------------------------------------------------
 
-#include "upnplib_gtest_tools.hpp"
+#include "upnplib/gtest.hpp"
 #include "gtest/gtest.h"
+
+using upnplib::testing::CaptureStdOutErr;
 
 namespace upnplib {
 
@@ -34,7 +36,7 @@ void errout() {
 TEST(PipeTestSuite, capture_stderr) {
 
     for (int i = 0; i < 129; i++) {
-        CCaptureStdOutErr captErrObj(STDERR_FILENO);
+        CaptureStdOutErr captErrObj(STDERR_FILENO);
 
         captErrObj.start();
         errout();

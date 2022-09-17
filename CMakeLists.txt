@@ -1,5 +1,5 @@
 # Copyright (C) 2022 GPL 3 and higher by Ingo Höft,  <Ingo@Hoeft-online.de>
-# Redistribution only with this Copyright remark. Last modified: 2022-08-05
+# Redistribution only with this Copyright remark. Last modified: 2022-09-17
 
 # Configure and build with:
 # cmake -S . -B build
@@ -14,6 +14,8 @@ project(SIMPLE_TESTS VERSION 0002
         HOMEPAGE_URL "https://github.com/ingo-h")
 
 enable_testing()
+
+set(UPnPlib_SOURCE_DIR "/home/ingo/devel/upnplib-dev/upnplib")
 
 set (BUILD_SHARED_LIBS ON CACHE INTERNAL
     "This option belongs only to GOOGLETEST and build its libraries shared.")  # Implies FORCE
@@ -58,6 +60,7 @@ message(CHECK_PASS "done")
 #add_subdirectory(./accept)
 #add_subdirectory(./functionptr)
 #add_subdirectory(./string-literal)
+add_subdirectory(./mock)
 add_subdirectory(./pipe)
 
 message(STATUS "Build type is ${CMAKE_BUILD_TYPE}")

@@ -1,67 +1,66 @@
-// Test with mocked object as parameter to caller program
-// ./compile.sh proof*.cpp [-DEXECUTABLE]
-// Author: 2021-03-01 - Ingo Höft <Ingo@Hoeft-online.de>
+// Test with mocked object as parameter to caller program,
+// means dependency injection.
+// ./compile.sh proof*.cpp [-DMOCK]
+// Author: 2021-03-01 Ingo Höft <Ingo@Hoeft-online.de>, last modified 2022-09-16
 
-#include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include <iostream>
 
 class WorkerInterface {
-public:
+  public:
     virtual ~WorkerInterface() {}
     virtual int working() = 0;
 };
 
+//
 class Worker : public WorkerInterface {
-public:
-    virtual ~Worker() {}
-    int working() {
-        return 1;
-    };
+  public:
+    virtual ~Worker() override {}
+    int working() { return 1; }
 };
 
-class Caller
-{
-private:
-    WorkerInterface* mWorkObj;
-public:
-    Caller(WorkerInterface* pWorkerObj)
-        : mWorkObj(pWorkerObj){}
+//
+class Caller {
+  public:
+    Caller(WorkerInterface* a_WorkerObj) : m_WorkObj(a_WorkerObj) {}
 
     int calling() {
-        int ret = mWorkObj->working();
+        int ret = m_WorkObj->working();
         std::cout << "workerObj.working returned = " << ret << "\n";
         return ret;
     }
+
+  private:
+    WorkerInterface* m_WorkObj;
 };
 
-#if defined (EXECUTABLE)
-int main(int argc, char **argv)
-{
+//
+#ifndef MOCK
+int main(int argc, char** argv) {
     Worker workerObj;
     Caller callerObj(&workerObj);
-    return callerObj.calling();
+    return (callerObj.calling() == 1 ? 0 : 1);
 }
 #else
 
+//
 class WorkerMock : public WorkerInterface {
-public:
+  public:
+    virtual ~WorkerMock() override {}
     MOCK_METHOD(int, working, ());
 };
 
-
-TEST(MockTestSuite, working)
-{
+TEST(MockTestSuite, working) {
     WorkerMock workerMockObj;
+    // Using default expectations
     EXPECT_CALL(workerMockObj, working());
 
+    // Inject worker object
     Caller callerObj(&workerMockObj);
     EXPECT_EQ(callerObj.calling(), 0);
 }
 
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
+int main(int argc, char** argv) {
+    ::testing::InitGoogleMock(&argc, argv);
     return RUN_ALL_TESTS();
 }
 #endif
