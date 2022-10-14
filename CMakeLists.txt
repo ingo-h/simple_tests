@@ -1,9 +1,9 @@
 # Copyright (C) 2022 GPL 3 and higher by Ingo Höft,  <Ingo@Hoeft-online.de>
-# Redistribution only with this Copyright remark. Last modified: 2022-09-17
+# Redistribution only with this Copyright remark. Last modified: 2022-10-14
 
 # Configure and build with:
-# cmake -S . -B build
-# cmake --build build --config Release
+# cmake -S . -B build [-D CMAKE_BUILD_TYPE=Debug -D UPNPLIB_WITH_GOOGLETEST=ON]
+# cmake --build build --config Release|Debug
 
 cmake_minimum_required(VERSION 3.18)
 include(./project-header.cmake)
@@ -31,23 +31,25 @@ endif()
 # Googletest                    #
 #################################
 # Download, configure and build
-include(FetchContent)
+if(UPNPLIB_WITH_GOOGLETEST)
+    include(FetchContent)
 
-message(CHECK_START "Download and configuring GoogleTest")
+    message(CHECK_START "Download and configuring GoogleTest")
 
-FetchContent_Declare(
-    googletest
-    GIT_REPOSITORY    https://github.com/google/googletest.git
-    GIT_TAG           origin/main
-    GIT_SHALLOW       ON
-)
-# This caches googletest_SOURCE_DIR, googletest_BINARY_DIR and googletest_POPULATED.
-FetchContent_MakeAvailable(googletest)
+    FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY    https://github.com/google/googletest.git
+        GIT_TAG           origin/main
+        GIT_SHALLOW       ON
+    )
+    # This caches googletest_SOURCE_DIR, googletest_BINARY_DIR and googletest_POPULATED.
+    FetchContent_MakeAvailable(googletest)
 
-link_libraries(gtest gmock gtest_main gmock_main
-)
+    link_libraries(gtest gmock gtest_main gmock_main
+    )
 
-message(CHECK_PASS "done")
+    message(CHECK_PASS "done")
+endif()
 
 
 #################################
@@ -60,7 +62,8 @@ message(CHECK_PASS "done")
 #add_subdirectory(./accept)
 #add_subdirectory(./functionptr)
 #add_subdirectory(./string-literal)
-add_subdirectory(./mock)
-add_subdirectory(./pipe)
+#add_subdirectory(./mock)
+#add_subdirectory(./pipe)
+add_subdirectory(./link_dependent_lib)
 
 message(STATUS "Build type is ${CMAKE_BUILD_TYPE}")
