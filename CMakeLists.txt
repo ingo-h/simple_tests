@@ -1,5 +1,5 @@
 # Copyright (C) 2022 GPL 3 and higher by Ingo Höft,  <Ingo@Hoeft-online.de>
-# Redistribution only with this Copyright remark. Last modified: 2022-10-14
+# Redistribution only with this Copyright remark. Last modified: 2022-11-29
 
 # Configure and build with:
 # cmake -S . -B build [-D CMAKE_BUILD_TYPE=Debug -D UPNPLIB_WITH_GOOGLETEST=ON]
@@ -64,6 +64,7 @@ endif()
 #add_subdirectory(./string-literal)
 #add_subdirectory(./mock)
 #add_subdirectory(./pipe)
-add_subdirectory(./link_dependent_lib)
+#add_subdirectory(./link_dependent_lib)
+add_subdirectory(./populate_global_vars_win32)
 
 message(STATUS "Build type is ${CMAKE_BUILD_TYPE}")
