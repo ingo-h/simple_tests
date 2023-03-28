@@ -1,5 +1,5 @@
-# Copyright (C) 2022 GPL 3 and higher by Ingo Höft,  <Ingo@Hoeft-online.de>
-# Redistribution only with this Copyright remark. Last modified: 2022-11-29
+# Copyright (C) 2022+ GPL 3 and higher by Ingo Höft,  Ingo@Hoeft-online.de>
+# Redistribution only with this Copyright remark. Last modified: 2023-03-28
 
 # Configure and build with:
 # cmake -S . -B build [-D CMAKE_BUILD_TYPE=Debug -D UPNPLIB_WITH_GOOGLETEST=ON]
@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.18)
 include(./project-header.cmake)
 
 # set the project name and version
-project(SIMPLE_TESTS VERSION 0002
+project(SIMPLE_TESTS VERSION 0003
         DESCRIPTION "Some simple tests for understanding"
         HOMEPAGE_URL "https://github.com/ingo-h")
 
@@ -65,6 +65,7 @@ endif()
 #add_subdirectory(./mock)
 #add_subdirectory(./pipe)
 #add_subdirectory(./link_dependent_lib)
-add_subdirectory(./populate_global_vars_win32)
+#add_subdirectory(./populate_global_vars_win32)
+add_subdirectory(./tests)
 
 message(STATUS "Build type is ${CMAKE_BUILD_TYPE}")

@@ -1,0 +1,1 @@
+g++ -std=c++11 -Wall -Wpedantic -Wextra -Werror -Wuninitialized -Wsuggest-override -Wdeprecated example.cpp
