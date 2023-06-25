@@ -1,3 +1,89 @@
+#include <netdb.h> // for sockaddr structures
+#include <cstring> // for memcmp()
+#include <cassert>
+
+using sockaddr_t = union {
+    sockaddr_storage ss;
+    sockaddr_in6 sin6;
+    sockaddr_in sin;
+    sockaddr sa;
+};
+
+#if false
+struct sockaddr_storage {
+    sa_family_t      ss_family;
+    // Following field(s) are implementation specific
+    // only for padding to mostly 128 bytes.
+    // No information usable.
+};
+
+struct sockaddr_in6 {
+    sa_family_t      sin6_family;   // AF_INET6.
+    in_port_t        sin6_port;     // Port number.
+    uint32_t         sin6_flowinfo; // IPv6 traffic class and flow info.
+    struct in6_addr  sin6_addr;     // IPv6 address.
+    uint32_t         sin6_scope_id; // Set of interfaces for a scope.
+};
+
+struct sockaddr_in {
+    sa_family_t      sin_family;    // AF_INET.
+    in_port_t        sin_port;      // Port number.
+    struct in_addr   sin_addr;      // IP address.
+};
+
+struct sockaddr {
+    sa_family_t      sa_family;     // Address family.
+    // char          sa_data[];     // Socket address (variable-length data).
+};
+
+struct in6_addr {
+    uint8_t s6_addr[16];
+};
+
+struct in_addr {
+    in_addr_t s_addr;
+};
+
+using sa_family_t = unsigned short int;
+using in_addr_t = uint32_t;
+using in_port_t = uint16_t;
+#endif
+
+// Examples:
+
+int main() {
+    sockaddr_t saddr{};
+
+    assert(saddr.ss.ss_family == saddr.sin6.sin6_family);
+    assert(saddr.ss.ss_family == saddr.sin.sin_family);
+    assert(saddr.ss.ss_family == saddr.sa.sa_family);
+
+    if (saddr.ss.ss_family == AF_INET6) {
+        [[maybe_unused]] in_port_t port6 = saddr.sin6.sin6_port;
+        [[maybe_unused]] in6_addr addr6 = saddr.sin6.sin6_addr;
+
+        // Check if sin6_addr is null
+        uint8_t s6_addr0[16]{};
+        [[maybe_unused]] bool res = (memcmp(saddr.sin6.sin6_addr.s6_addr,
+                                            s6_addr0, sizeof(s6_addr0)) == 0);
+    }
+
+    if (saddr.ss.ss_family == AF_INET) {
+        [[maybe_unused]] in_port_t port = saddr.sin.sin_port;
+        [[maybe_unused]] in_addr_t addr = saddr.sin.sin_addr.s_addr;
+    }
+
+    // sockaddr is only used for type casting on function arguments
+    if (saddr.ss.ss_family == AF_INET6) {
+        int sockfd = socket(saddr.ss.ss_family, SOCK_DGRAM, 0);
+        socklen_t len = sizeof(saddr.sin6);
+        [[maybe_unused]] int ret = getsockname(sockfd, (sockaddr*)&saddr, &len);
+    }
+}
+
+
+#if 0
+// #############################################################################
 #include <netdb.h>
 #include <iostream>
 #include <cstring>
@@ -10,7 +96,7 @@ typedef union {
     struct sockaddr_storage ss;
 } address_t;
 
-struct addrinfo hint {};
+struct addrinfo hint{};
 struct addrinfo *addrs, *serv;
 address_t addr;
 
@@ -52,22 +138,21 @@ int main() {
                 std::cerr << "ERROR! " << std::strerror(errno) << ".\n";
                 return 1;
             }
-            std::cout << address_sr << " AF_INET6 = [" << addr_buf
-                      << "]:" << ntohs(addr.s6.sin6_port) << "\n";
+            std::cout << address_sr << " AF_INET6 = [" << addr_buf << "]:"
+                      << ntohs(addr.s6.sin6_port) << "\n";
         } break;
 
         default:
-            std::cerr << "ERROR! invalid address family " << addr.ss.ss_family
-                      << ".\n";
+            std::cerr << "ERROR! invalid address family " << addr.ss.ss_family << ".\n";
             return 1;
         } // switch
-    }     // for
+    } // for
 
     freeaddrinfo(addrs);
     return 0;
 }
 
-#if 0
+
 // #############################################################################
 // Answer given at: https://stackoverflow.com/a/76360210/5014688
 
