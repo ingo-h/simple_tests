@@ -1,3 +1,54 @@
+// This is to test System error support from the C++ standard library. It is
+// confusing what error_code/error_condition to use with what category on which
+// platform to use. Here I can test it with modifying different settings. In
+// general the error support doesn't really make sense to use.
+
+#include <iostream>
+#include <winsock2.h>
+#include <ws2tcpip.h> // for getaddrinfo, socklen_t etc.
+
+
+int main() {
+// We have do initialize win32 sockets
+#ifdef _WIN32
+    WSADATA wsaData;
+    ::WSAStartup(MAKEWORD(2, 2), &wsaData);
+#endif
+
+    std::error_code ec;
+
+    char so_opt;
+    socklen_t optlen{sizeof(so_opt)};
+    int rc = getsockopt(55555, SOL_SOCKET, SO_ERROR, &so_opt, &optlen);
+
+    if (rc != 0)
+#ifdef _WIN32
+        ec = std::error_code(GetLastError(), std::system_category());
+#else
+        ec = std::error_condition(errno, std::system_category());
+#endif
+
+    // To test using portable code
+    if (ec == std::errc::bad_file_descriptor)
+        std::cout << "match error code 'bad_file_descriptor'(" << ec.value()
+                  << ").\n";
+    else
+        std::cout << "\"" << ec.message() << "\"(" << ec.value()
+                  << ") does not match 'bad_file_descriptor'(9).\n";
+
+        // To convert into nearest portable error condition (lossy, may
+        // fail)
+        // std::error_condition ec2(ec.default_error_condition())
+
+#if _WIN32
+    ::WSACleanup();
+#endif
+
+    return 0;
+}
+
+
+#if 0
 #include <netdb.h> // for sockaddr structures
 #include <cstring> // for memcmp()
 #include <cassert>
@@ -82,7 +133,6 @@ int main() {
 }
 
 
-#if 0
 // #############################################################################
 #include <netdb.h>
 #include <iostream>
