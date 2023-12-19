@@ -1,0 +1,3 @@
+g++ -std=c++17 -Wall -Wpedantic -Wextra -Werror -Wuninitialized -Wsuggest-override -Wdeprecated sigpipe.cpp main.cpp -lpthread #-lssl
+# On the Microsoft Windows developement prompt I use:
+cl /EHsc sigpipe.cpp main.cpp ws2_32.lib

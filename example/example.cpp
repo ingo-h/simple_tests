@@ -1,3 +1,4 @@
+// #############################################################################
 // This is to test System error support from the C++ standard library. It is
 // confusing what error_code/error_condition to use with what category on which
 // platform to use. Here I can test it with modifying different settings. In
@@ -49,6 +50,7 @@ int main() {
 
 
 #if 0
+// #############################################################################
 #include <netdb.h> // for sockaddr structures
 #include <cstring> // for memcmp()
 #include <cassert>

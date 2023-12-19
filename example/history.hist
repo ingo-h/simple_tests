@@ -1,3 +1,3 @@
-g++ -std=c++11 -Wall -Wpedantic -Wextra -Werror -Wuninitialized -Wsuggest-override -Wdeprecated example.cpp
+g++ -std=c++17 -Wall -Wpedantic -Wextra -Werror -Wuninitialized -Wsuggest-override -Wdeprecated example.cpp -lpthread #-lssl
 # On the Microsoft Windows developement prompt I use:
 cl /EHsc .\example.cpp ws2_32.lib
