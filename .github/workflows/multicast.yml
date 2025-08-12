@@ -1,0 +1,113 @@
+name: Sending SSDP multicast
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  # Job: Send IPv4 SSDP multicast on Ubuntu
+  # ---------------------------------------
+  Test_IPv4_on_Ubuntu:
+    name: Send IPv4 SSDP on Ubuntu
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: compile
+      run: |
+        set -v
+        cd multicast/
+        g++ -std=c++11 -pedantic-errors -Wall -o send_ssdp_ipv4 send_ssdp_ipv4.cpp
+    - name: execute
+      run: |
+        set -v
+        multicast/send_ssdp_ipv4
+
+  # Job: Send IPv4 SSDP multicast on MacOS 14
+  # -----------------------------------------
+  Test_IPv4_on_MacOS_14:
+    name: Send IPv4 SSDP on MacOS 14
+    runs-on: macos-14
+    steps:
+    - uses: actions/checkout@v4
+    - name: compile
+      run: |
+        set -v
+        cd multicast/
+        g++ -std=c++11 -pedantic-errors -Wall -o send_ssdp_ipv4 send_ssdp_ipv4.cpp
+    - name: execute
+      run: |
+        set -v
+        multicast/send_ssdp_ipv4
+
+  # Job: Send IPv4 SSDP multicast on MacOS 15
+  # -----------------------------------------
+  Test_IPv4_on_MacOS_15:
+    name: Send IPv4 SSDP on MacOS 15
+    runs-on: macos-15
+    steps:
+    - uses: actions/checkout@v4
+    - name: compile
+      run: |
+        set -v
+        cd multicast/
+        g++ -std=c++11 -pedantic-errors -Wall -o send_ssdp_ipv4 send_ssdp_ipv4.cpp
+    - name: execute
+      run: |
+        set -v
+        multicast/send_ssdp_ipv4
+
+
+  # Job: Send IPv6 SSDP multicast on Ubuntu
+  # ---------------------------------------
+  Test_IPv6_on_Ubuntu:
+    name: Send IPv6 SSDP on Ubuntu
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: compile
+      run: |
+        set -v
+        cd multicast/
+        g++ -std=c++11 -pedantic-errors -Wall -o send_ssdp_ipv6 send_ssdp_ipv6.cpp
+    - name: execute
+      run: |
+        set -v
+        multicast/send_ssdp_ipv6
+
+  # Job: Send IPv6 SSDP multicast on MacOS 14
+  # -----------------------------------------
+  Test_IPv6_on_MacOS_14:
+    name: Send IPv6 SSDP on MacOS 14
+    runs-on: macos-14
+    steps:
+    - uses: actions/checkout@v4
+    - name: show local interface addresses
+      run: |
+        set -v
+        ifconfig -v
+    - name: compile
+      run: |
+        set -v
+        cd multicast/
+        g++ -std=c++11 -pedantic-errors -Wall -o send_ssdp_ipv6 send_ssdp_ipv6.cpp
+    - name: execute
+      run: |
+        set -v
+        multicast/send_ssdp_ipv6
+
+  # Job: Send IPv6 SSDP multicast on MacOS 15
+  # -----------------------------------------
+  Test_IPv6_on_MacOS_15:
+    name: Send IPv6 SSDP on MacOS 15
+    runs-on: macos-15
+    steps:
+    - uses: actions/checkout@v4
+    - name: compile
+      run: |
+        set -v
+        cd multicast/
+        g++ -std=c++11 -pedantic-errors -Wall -o send_ssdp_ipv6 send_ssdp_ipv6.cpp
+    - name: execute
+      run: |
+        set -v
+        multicast/send_ssdp_ipv6
