@@ -1,0 +1,1 @@
+g++ -std=c++23 -pedantic-errors -Wall -o app app.cp
