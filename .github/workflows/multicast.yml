@@ -1,8 +1,12 @@
 name: Sending SSDP multicast
 
 on:
+  # Runs on pushes
   push:
     branches: [ dev ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   # Job: Send IPv4 SSDP multicast on Ubuntu
